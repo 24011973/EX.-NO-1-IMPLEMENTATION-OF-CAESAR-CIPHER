@@ -17,49 +17,58 @@ STEP-5: Display the cipher text obtained above.
 
 ## PROGRAM:
 ```
+
 #include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 
 int main() {
-    char plainText[100];
-    int key, i = 0;
-    printf("Enter the plain text: ");
-    fgets(plainText, sizeof(plainText), stdin);
-    printf("Enter the key (positive or negative): ");
+    char text[100], encrypted[100], decrypted[100];
+    int key, i;
+
+    printf("Enter text: ");
+    fgets(text, sizeof(text), stdin);
+
+    text[strcspn(text, "\n")] = '\0';
+
+    printf("Enter key: ");
     scanf("%d", &key);
 
-    while (plainText[i] != '\0' && plainText[i] != '\n') {
-        char ch = plainText[i];
-        
-   
-        if (ch >= 'A' && ch <= 'Z') {
-          
-            if (key >= 0)
-                ch = (ch - 'A' + key) % 26 + 'A';
-            else
-                ch = (ch - 'A' + 26 + key) % 26 + 'A';
-        } else if (ch >= 'a' && ch <= 'z') {
-           
-            if (key >= 0)
-                ch = (ch - 'a' + key) % 26 + 'a';
-            else
-                ch = (ch - 'a' + 26 + key) % 26 + 'a';
+    for(i = 0; text[i] != '\0'; i++) {
+        char ch = text[i];
+
+        if(isalpha(ch)) {
+            char base = islower(ch) ? 'a' : 'A';
+            encrypted[i] = (ch - base + key) % 26 + base;
+        } else {
+            encrypted[i] = ch;
         }
-        
-        plainText[i] = ch;
-        i++;
     }
-    printf("Cipher text: %s\n", plainText);
+    encrypted[i] = '\0';
+
+    for(i = 0; encrypted[i] != '\0'; i++) {
+        char ch = encrypted[i];
+
+        if(isalpha(ch)) {
+            char base = islower(ch) ? 'a' : 'A';
+            decrypted[i] = (ch - base - key + 26) % 26 + base;
+        } else {
+            decrypted[i] = ch;
+        }
+    }
+    decrypted[i] = '\0';
+
+    printf("Encrypted: %s\n", encrypted);
+    printf("Decrypted: %s\n", decrypted);
+
     return 0;
 }
-
 
 ```
 
 ## OUTPUT:
+<img width="1686" height="1001" alt="image" src="https://github.com/user-attachments/assets/1ced9a38-c1bc-4c8c-aa38-ffc7b77a20f6" />
 
-<img width="1918" height="990" alt="image" src="https://github.com/user-attachments/assets/d0db440b-8aa1-46cb-8fe2-e9556164bdde" />
-
-<img width="1915" height="968" alt="image" src="https://github.com/user-attachments/assets/da1cc0c3-49e9-46ed-ae9b-a7ac1340a343" />
 
 
 ## RESULT :
