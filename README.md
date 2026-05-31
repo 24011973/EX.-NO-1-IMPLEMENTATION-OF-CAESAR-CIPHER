@@ -18,60 +18,48 @@ STEP-5: Display the cipher text obtained above.
 ## PROGRAM:
 ```
 #include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-int main()
-{
-    char plain[100], cipher[100];
-    int key, i, length;
+
+int main() {
+    char plainText[100];
+    int key, i = 0;
     printf("Enter the plain text: ");
-    scanf("%s", plain);
-    printf("\nEnter the key value: ");
+    fgets(plainText, sizeof(plainText), stdin);
+    printf("Enter the key (positive or negative): ");
     scanf("%d", &key);
-    length = strlen(plain);
-    printf("\nPLAIN TEXT: %s\n", plain);
-    printf("ENCRYPTED TEXT: ");
-    for (i = 0; i < length; i++)
-    {
-        if (isupper(plain[i]))
-        {
-            cipher[i] = (plain[i] - 'A' + key) % 26 + 'A';
+
+    while (plainText[i] != '\0' && plainText[i] != '\n') {
+        char ch = plainText[i];
+        
+   
+        if (ch >= 'A' && ch <= 'Z') {
+          
+            if (key >= 0)
+                ch = (ch - 'A' + key) % 26 + 'A';
+            else
+                ch = (ch - 'A' + 26 + key) % 26 + 'A';
+        } else if (ch >= 'a' && ch <= 'z') {
+           
+            if (key >= 0)
+                ch = (ch - 'a' + key) % 26 + 'a';
+            else
+                ch = (ch - 'a' + 26 + key) % 26 + 'a';
         }
-        else if (islower(plain[i]))
-        {
-            cipher[i] = (plain[i] - 'a' + key) % 26 + 'a';
-        }
-        else
-        {
-            cipher[i] = plain[i];
-        }
-        printf("%c", cipher[i]);
+        
+        plainText[i] = ch;
+        i++;
     }
-    cipher[length] = '\0';
-    printf("\nDECRYPTED TEXT: ");
-    for (i = 0; i < length; i++)
-    {
-        if (isupper(cipher[i]))
-        {
-            plain[i] = (cipher[i] - 'A' - key + 26) % 26 + 'A';
-        }
-        else if (islower(cipher[i]))
-        {
-            plain[i] = (cipher[i] - 'a' - key + 26) % 26 + 'a';
-        }
-        else
-        {
-            plain[i] = cipher[i];
-        }
-        printf("%c", plain[i]);
-    }
-    plain[length] = '\0';
+    printf("Cipher text: %s\n", plainText);
     return 0;
 }
+
+
 ```
 
 ## OUTPUT:
-<img width="1873" height="959" alt="image" src="https://github.com/user-attachments/assets/f13a58a8-0e17-4d5c-b071-90fe26ef16b4" />
+
+<img width="1918" height="990" alt="image" src="https://github.com/user-attachments/assets/d0db440b-8aa1-46cb-8fe2-e9556164bdde" />
+
+<img width="1915" height="968" alt="image" src="https://github.com/user-attachments/assets/da1cc0c3-49e9-46ed-ae9b-a7ac1340a343" />
 
 
 ## RESULT :
